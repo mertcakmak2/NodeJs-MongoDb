@@ -24,7 +24,10 @@ app.post('/add', (req, res) => {
 })
 
 app.post('/addTag', (req,res) => {
-    User.updateOne({_id: req.body._id}, { $push: {tags: req.body.tag} }).then(result => {
+    User.updateOne(
+            {_id: req.body._id}, 
+            { $push: {tags: req.body.tag} })
+        .then(result => {
         res.send(result)
     })
 })
