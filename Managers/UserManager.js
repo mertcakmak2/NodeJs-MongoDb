@@ -10,18 +10,22 @@ function getAllUser() {
     return new Promise((resolve, reject) => {
         User.find().then(result => {
             resolve(result)
+        }).catch(err => {
+            resolve(err)
         })
     })
 }
 
 function register(user) {
     return new Promise((resolve, reject) => {
-        var { name, email, password, tags } = user
+        var { firstName, lastName, email, phoneNumber, gender, birthDate, password, tags } = user
         bcrypt.hash(password, 10).then(hash => {
             password = hash
-            var user = new User({ name, email, password, tags })
+            var user = new User({ firstName, lastName, email, password, phoneNumber, birthDate, gender, tags })
             user.save().then(result => {
                 resolve(result)
+            }).catch(err => {
+                resolve(err)
             })
         })
     })
@@ -41,7 +45,8 @@ function login(user, key) {
                         })
                     } else {
                         const payload = {
-                            email
+                            email,
+                            id: user.id
                         };
                         const token = jwt.sign(payload, key, {
                             expiresIn: 120 //120 saniyelik token (2 dakika)
@@ -49,6 +54,10 @@ function login(user, key) {
                         resolve({
                             status,
                             token,
+                            user: {
+                                _id: user._id,
+                                email: user.email
+                            },
                             message: "Authentication success"
                         })
                     }
@@ -57,6 +66,8 @@ function login(user, key) {
                 status: false,
                 message: 'Authentication failed, user not found.'
             })
+        }).catch(err => {
+            resolve(err)
         })
     })
 }

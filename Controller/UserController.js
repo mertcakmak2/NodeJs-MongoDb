@@ -1,9 +1,6 @@
 const express = require('express')
 const app = express.Router()
 
-//Main Model
-const User = require('../MongoModels/user')
-
 //Model Manager
 const UserManager = require("../Managers/UserManager")
 
