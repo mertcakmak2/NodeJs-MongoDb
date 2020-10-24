@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        unique : true,
+        unique: true,
         required: true
     },
     password: {
@@ -18,14 +18,14 @@ const userSchema = mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        unique : true,
+        unique: true,
     },
     birthDate: {
         type: Date,
     },
     gender: {
         type: String,
-        maxLength:1
+        maxLength: 1
     },
     tags: [String]
 }, { timestamps: true })
